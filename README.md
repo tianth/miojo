@@ -1,7 +1,7 @@
 MIOJO
 =====
 
-Um framework muito básico (ênfase no *muito*), criado para demonstrar diversos conceitos em aulas do [Campus Tableless](http://campus.tableless.com.br)
+Um framework muito básico (ênfase no *muito*), criado para demonstrar alguns conceitos em aulas do [Campus Tableless](http://campus.tableless.com.br)
 
 Configuração
 ============
@@ -43,8 +43,6 @@ namespace "Controllers".
 
 O nome do controller precisa ser o mesmo nome do arquivo com a primeira letra maiúscula. Se o arquivo for "posts.php" o nome da classe deverá
 ser "Posts".
-
-Controllers precisam herdar a class BaseController.
 
 Os métodos do controller serão chamados de acordo com o método da requisição e o caminho requisitado.
 Portanto, os métodos devem seguir o seguinte padrão de nomenclatura:
