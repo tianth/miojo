@@ -78,9 +78,9 @@ class Configuration
 			
 			// é preciso remover a primeira abertura da tag do php,
 			// porque eval() não funciona com essa tag
-			if (strpos($code, "<?php") == 0) {
+			if (strpos($code, "<?php") === 0) {
 				$code = substr($code, 5, strlen($code));
-			} elseif (strpos($code, "<?") == 0) {
+			} elseif (strpos($code, "<?") === 0) {
 				$code = substr($code, 3, strlen($code));
 			}
 			
