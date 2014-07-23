@@ -45,41 +45,41 @@ class Application
 	private function loadDotenv()
 	{
 		// caminho padrão para o arquivo dotenv relativo à pasta do framework
-        $filePath = "../.env";
-		
+		$filePath = "../.env";
+
 		// se o arquivo não existir, carrega ambiente padrão
 		if (!is_file($filePath) || !is_readable($filePath)) {
 			$this->loadDefaultEnv();
 			return;
 		}
-		
+
 		// código abaixo copiado de: https://github.com/vlucas/phpdotenv/blob/master/src/Dotenv.php
-		
-        // Read file into an array of lines with auto-detected line endings
-        $autodetect = ini_get('auto_detect_line_endings');
-        ini_set('auto_detect_line_endings', '1');
-        $lines = file($filePath, FILE_SKIP_EMPTY_LINES);
-        ini_set('auto_detect_line_endings', $autodetect);
 
-        foreach ($lines as $line) {
-            // Only use non-empty lines that look like setters
-            if (strpos($line, '=') !== false) {
-                // Strip quotes because putenv can't handle them. Also remove 'export' if present
-                $line = str_replace(array('export ', '\'', '"'), '', $line);
-                // Remove whitespaces around key & value
-                list($key, $val) = array_map('trim', explode('=', $line, 2));
+		// Read file into an array of lines with auto-detected line endings
+		$autodetect = ini_get('auto_detect_line_endings');
+		ini_set('auto_detect_line_endings', '1');
+		$lines = file($filePath, FILE_SKIP_EMPTY_LINES);
+		ini_set('auto_detect_line_endings', $autodetect);
 
-                // Don't overwrite existing environment variables.
-                // Ruby's dotenv does this with `ENV[key] ||= value`.
-                if (getenv($key) === false) {
-                    putenv("$key=$val");
-                    // Set PHP superglobals
-                    $_ENV[$key] = $val;
-                    $_SERVER[$key] = $val;
-                }
-            }
-        }
-		
+		foreach ($lines as $line) {
+			// Only use non-empty lines that look like setters
+			if (strpos($line, '=') !== false) {
+				// Strip quotes because putenv can't handle them. Also remove 'export' if present
+				$line = str_replace(array('export ', '\'', '"'), '', $line);
+				// Remove whitespaces around key & value
+				list($key, $val) = array_map('trim', explode('=', $line, 2));
+
+				// Don't overwrite existing environment variables.
+				// Ruby's dotenv does this with `ENV[key] ||= value`.
+				if (getenv($key) === false) {
+					putenv("$key=$val");
+					// Set PHP superglobals
+					$_ENV[$key] = $val;
+					$_SERVER[$key] = $val;
+				}
+			}
+		}
+
 		// define o ambiente que foi especificado no arquivo .env
 		$this->setEnvironment($_ENV['MIOJO_ENV']);
 	}
